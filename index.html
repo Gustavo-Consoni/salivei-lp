@@ -1,0 +1,1174 @@
+<!doctype html>
+<html class="antialiased scroll-smooth" lang="pt-BR">
+    <head>
+        <title>Salivei</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Cardápios digitais em vídeo">
+        <link rel="icon" href="descolada-com-fundo-192x192.png" type="image/png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Instrument+Serif&display=swap">
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script>document.documentElement.classList.add("reveal-ready")</script>
+        <style>
+            .text-gold {
+                background: linear-gradient(100deg, #fde7b8, #f2b766 45%, #d4833a);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+            .grain {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            }
+            .preserve-3d {
+                transform-style: preserve-3d;
+            }
+            .liquid-glass {
+                -webkit-backdrop-filter: blur(14px) saturate(180%) brightness(1.1);
+                backdrop-filter: blur(14px) saturate(180%) brightness(1.1);
+                box-shadow:
+                    inset 0 1px 1px rgba(255, 255, 255, .35),
+                    inset 0 -1px 1px rgba(255, 255, 255, .08),
+                    inset 0 0 16px rgba(255, 255, 255, .06),
+                    0 8px 24px -8px rgba(0, 0, 0, .5);
+            }
+            .liquid-glass::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                border-radius: inherit;
+                padding: 1px;
+                background: linear-gradient(135deg, rgba(255, 255, 255, .5), rgba(255, 255, 255, .1) 35%, rgba(255, 255, 255, .03) 65%, rgba(255, 255, 255, .3));
+                -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                -webkit-mask-composite: xor;
+                mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                mask-composite: exclude;
+                pointer-events: none;
+            }
+            .reveal-ready [data-reveal] {
+                opacity: 0;
+                translate: 0 32px;
+                filter: blur(8px);
+                transition: opacity 1.1s cubic-bezier(.16, 1, .3, 1), translate 1.1s cubic-bezier(.16, 1, .3, 1), filter 1.1s cubic-bezier(.16, 1, .3, 1);
+                transition-delay: var(--delay, 0ms);
+            }
+            .reveal-ready [data-reveal].is-visible {
+                opacity: 1;
+                translate: 0 0;
+                filter: none;
+            }
+            [data-spotlight] {
+                position: relative;
+                isolation: isolate;
+            }
+            [data-spotlight]::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: -1;
+                border-radius: inherit;
+                background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(242, 183, 102, .09), transparent 60%);
+                opacity: 0;
+                transition: opacity .5s;
+            }
+            [data-spotlight]:hover::before {
+                opacity: 1;
+            }
+            @keyframes marquee {
+                to { translate: -50% 0; }
+            }
+            @keyframes kenburns {
+                from { scale: 1; translate: 0 0; }
+                to { scale: 1.14; translate: -3% 2%; }
+            }
+            @keyframes steam {
+                0% { opacity: 0; translate: 0 0; scale: 1 1; }
+                30% { opacity: .6; }
+                100% { opacity: 0; translate: 0 -32px; scale: 2 1.3; }
+            }
+            @keyframes plate-sway {
+                from { transform: rotateX(-6deg) rotateY(-30deg); }
+                to { transform: rotateX(-6deg) rotateY(30deg); }
+            }
+            @keyframes ticket-line {
+                0%, 6% { opacity: 0; translate: 0 8px; }
+                14%, 84% { opacity: 1; translate: 0 0; }
+                94%, 100% { opacity: 0; translate: 0 0; }
+            }
+            @keyframes breathe {
+                0%, 100% { opacity: .55; scale: 1; }
+                50% { opacity: 1; scale: 1.08; }
+            }
+            @keyframes ping-dot {
+                75%, 100% { opacity: 0; scale: 2.5; }
+            }
+            .marquee { animation: marquee 50s linear infinite; min-height: calc(8rem * 4 / 3); }
+            @media (min-width: 640px) {
+                .marquee { animation-duration: 100s; min-height: calc(16rem * 4 / 3); }
+            }
+            .kenburns { animation: kenburns 5s ease-in-out infinite alternate; }
+            .steam { animation: steam 2.6s ease-out infinite both; }
+            .plate-sway { animation: plate-sway 9s ease-in-out infinite alternate; }
+            .ticket-line { animation: ticket-line 7s cubic-bezier(.16, 1, .3, 1) infinite both; }
+            .breathe { animation: breathe 4s ease-in-out infinite; }
+            .ping-dot { animation: ping-dot 1s cubic-bezier(0, 0, .2, 1) infinite; }
+            @media (prefers-reduced-motion: reduce) {
+                .marquee, .kenburns, .steam, .plate-sway, .ticket-line, .breathe, .ping-dot { animation: none; }
+                .reveal-ready [data-reveal] { opacity: 1; translate: 0 0; filter: none; transition: none; }
+            }
+        </style>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.3/dist/cdn.min.js"></script>
+        <style>
+            html {
+                text-size-adjust: 100%;
+                -webkit-text-size-adjust: 100%;
+                font-size: clamp(12px, 4vw, 16px);
+                font-family: "Instrument Sans", sans-serif;
+            }
+            .font-title {
+                font-family: "Instrument Serif", serif;
+            }
+            [x-cloak] {
+                display: none !important;
+            }
+            ::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+            }
+            ::-webkit-scrollbar-track {
+                background: #323232;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #212121;
+            }
+        </style>
+    </head>
+    <body class="bg-[#101010] min-h-svh" x-data="alpine">
+        <div class="relative bg-stone-950 selection:bg-amber-300/30 overflow-x-clip text-stone-100">
+            <!-- Navegação -->
+            <header class="top-4 z-50 fixed inset-x-0 px-4">
+                <div class="relative flex justify-between items-center bg-white/5 mx-auto py-2 pr-2 pl-4 rounded-full max-w-5xl liquid-glass">
+                    <a class="flex items-center gap-x-2 font-title text-[1.7rem] italic leading-none" href="#">
+                        <img class="size-7" src="colada-sem-fundo-192x192.png" loading="lazy">
+                        <span class="mt-0.5">Salivei</span>
+                    </a>
+                    <nav class="hidden md:flex gap-x-4 lg:gap-x-8 text-stone-400 text-sm">
+                        <a class="hover:text-stone-100 duration-300" href="#como-funciona">Como funciona</a>
+                        <a class="hover:text-stone-100 duration-300" href="#vantagens">Vantagens</a>
+                        <a class="hover:text-stone-100 duration-300" href="#nfc">Plaquinha NFC</a>
+                        <a class="hover:text-stone-100 duration-300" href="#precos">Preços</a>
+                        <a class="hover:text-stone-100 duration-300" href="#duvidas">Dúvidas</a>
+                    </nav>
+                    <div class="flex items-center gap-x-1">
+                        <a class="max-sm:hidden px-4 py-2 rounded-full text-stone-400 hover:text-stone-100 text-sm duration-300" href="">Entrar</a>
+                        <a class="bg-stone-100 hover:bg-white px-4 py-2 rounded-full font-medium text-stone-950 text-sm duration-300" href="">Começar agora</a>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Hero -->
+            <section class="relative pt-32">
+                <div class="absolute inset-0 pointer-events-none">
+                    <div class="-top-32 left-1/2 absolute bg-radial from-amber-500/25 via-orange-700/10 to-70% to-transparent blur-2xl rounded-full w-[1100px] h-[700px] -translate-x-1/2 breathe"></div>
+                    <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,.035)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_at_50%_20%,black,transparent_70%)]"></div>
+                </div>
+
+                <div class="relative mx-auto px-4 max-w-5xl text-center">
+                    <div data-reveal>
+                        <p class="inline-flex items-center gap-x-2 bg-white/5 px-4 py-2 border border-white/10 rounded-full text-stone-400 text-xs sm:text-sm">
+                            <span class="relative flex size-2">
+                                <span class="absolute bg-amber-300 opacity-75 rounded-full size-full ping-dot"></span>
+                                <span class="relative bg-amber-300 rounded-full size-2"></span>
+                            </span>
+                            Cardápio em vídeo + plaquinha NFC na mesa
+                        </p>
+                    </div>
+                    <h1 class="mt-8 font-title text-[3.4rem] lg:text-[6.6rem] sm:text-7xl leading-[.92]" data-reveal style="--delay: 100ms">
+                        O cardápio que dá <em class="text-gold">água na boca</em> antes do prato chegar
+                    </h1>
+                    <p class="mx-auto mt-8 max-w-2xl text-stone-400 sm:text-lg leading-relaxed" data-reveal style="--delay: 200ms">
+                        Seu cliente encosta o celular na plaquinha da mesa e vê cada prato em vídeo: o queijo derretendo, o drink sendo montado, a calda escorrendo. Quem vê, sente vontade. E quem sente vontade, pede mais.
+                    </p>
+                    <div class="flex sm:flex-row flex-col justify-center items-center gap-4 mt-8" data-reveal style="--delay: 300ms">
+                        <a class="group inline-flex justify-center items-center gap-x-2 bg-linear-to-b from-amber-200 to-amber-400 shadow-[0_0_40px_-10px_rgba(245,158,11,.7)] hover:shadow-[0_0_50px_-8px_rgba(245,158,11,.85)] px-8 py-4 rounded-full w-full sm:w-auto font-medium text-stone-950 duration-300" href="">
+                            Quero vender mais com vídeo
+                            <svg class="size-4 group-hover:translate-x-1 duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                <path fill-rule="evenodd" d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z" clip-rule="evenodd"/>
+                            </svg>
+                        </a>
+                        <a class="inline-flex justify-center items-center gap-x-2 hover:bg-white/5 px-8 py-4 border border-white/15 rounded-full w-full sm:w-auto font-medium duration-300" href="#como-funciona">
+                            <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm-.847-9.766A.75.75 0 0 0 6 5.866v4.268a.75.75 0 0 0 1.153.633l3.353-2.134a.75.75 0 0 0 0-1.266L7.153 5.234Z" clip-rule="evenodd"/>
+                            </svg>
+                            Ver funcionando
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Vitrine de pratos em vídeo -->
+                <div class="relative mt-16 sm:mt-32 py-1 [mask-image:linear-gradient(90deg,transparent,black_12%,black_88%,transparent)]" data-reveal="load" style="--delay: 400ms" aria-hidden="true">
+                    <div class="flex w-max marquee">
+                        <template x-for="copy in 4" :key="copy">
+                            <div class="flex">
+                                <template x-for="(dish, index) in dishes" :key="dish.name">
+                                    <div class="relative bg-stone-900 mr-4 rounded-3xl ring-1 ring-white/10 w-32 sm:w-64 aspect-3/4 overflow-hidden transform-gpu">
+                                        <div class="absolute inset-0 flex justify-center items-center opacity-70 blur-2xl saturate-150 text-[200px]" x-text="dish.emoji"></div>
+                                        <div class="absolute inset-0 flex justify-center items-center text-5xl sm:text-7xl kenburns" :style="`animation-delay: -${index * .8}s`" x-text="dish.emoji"></div>
+                                        <template x-if="dish.hot">
+                                            <div class="absolute inset-0">
+                                                <span class="top-[26%] left-[42%] absolute bg-white/50 blur-[5px] rounded-full w-4 h-8 steam"></span>
+                                                <span class="top-[22%] left-[54%] absolute bg-white/50 blur-[5px] rounded-full w-4 h-8 steam" style="animation-delay: 1.1s"></span>
+                                            </div>
+                                        </template>
+                                        <div class="absolute inset-0 bg-linear-to-t from-stone-950 via-stone-950/10 to-transparent"></div>
+                                        <span class="top-2 sm:top-4 left-2 sm:left-4 absolute flex items-center gap-x-1 bg-stone-950/60 px-2 py-1 rounded-full ring-1 ring-white/10 text-[10px] text-white/90">
+                                            <span class="bg-red-500 rounded-full size-2"></span>
+                                            <span x-text="`0:${String(8 + index).padStart(2, '0')}`"></span>
+                                        </span>
+                                        <div class="right-2 sm:right-4 bottom-2 sm:bottom-4 left-2 sm:left-4 absolute text-left">
+                                            <p class="font-title text-lg sm:text-2xl leading-none" x-text="dish.name"></p>
+                                            <p class="mt-2 text-stone-400 text-xs" x-text="dish.price"></p>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Demonstração -->
+            <section class="relative pt-32 scroll-mt-16" id="como-funciona">
+                <div class="mx-auto px-4 max-w-6xl">
+                    <div class="mx-auto max-w-2xl text-center">
+                        <p class="text-amber-200/70 text-sm tracking-[.25em]" data-reveal>VEJA NA PRÁTICA</p>
+                        <h2 class="mt-4 font-title text-5xl sm:text-7xl leading-[.95]" data-reveal style="--delay: 100ms">Aproximou, abriu, <em class="text-gold">deu vontade</em></h2>
+                        <p class="mt-4 text-stone-400 sm:text-lg" data-reveal style="--delay: 200ms">Do momento em que o cliente senta até ele decidir o pedido. É assim que a experiência acontece na sua mesa.</p>
+                    </div>
+
+                    <div class="items-center gap-16 grid lg:grid-cols-12 mt-16">
+                        <div class="lg:col-span-7" data-reveal>
+                            <div class="relative mx-auto w-full max-w-[460px]" x-ref="stageWrap">
+                                <div class="-z-10 absolute -inset-8 bg-radial from-amber-500/15 to-70% to-transparent blur-2xl"></div>
+                                <div
+                                    class="relative bg-[#120d0a] shadow-[0_40px_120px_-30px_rgba(0,0,0,.9)] rounded-[2rem] ring-1 ring-white/10 overflow-hidden"
+                                    :style="`height: ${480 * stageScale}px`"
+                                    aria-hidden="true"
+                                >
+                                    <div class="top-0 left-1/2 absolute w-[360px] h-[480px] origin-top" :style="`transform: translateX(-50%) scale(${stageScale})`">
+
+                                        <!-- Ambiente -->
+                                        <div class="absolute inset-0 bg-[radial-gradient(70%_55%_at_35%_0%,rgba(251,191,36,.22),transparent_70%)]"></div>
+                                        <div class="top-32 left-[262px] absolute bg-amber-300/20 blur-md rounded-full size-8"></div>
+                                        <div class="top-32 left-[300px] absolute bg-orange-300/15 blur-lg rounded-full size-16"></div>
+                                        <div class="top-[190px] left-8 absolute bg-amber-200/10 blur-md rounded-full size-8"></div>
+
+                                        <!-- Mesa -->
+                                        <div class="absolute inset-0 [perspective:1100px] [perspective-origin:50%_22%]">
+                                            <div class="top-1/2 left-1/2 absolute size-0 preserve-3d">
+                                                <div
+                                                    class="absolute -mt-[350px] -ml-[450px] w-[900px] h-[700px]"
+                                                    style="transform: translateY(120px) rotateX(90deg); background: radial-gradient(40% 35% at 42% 48%, rgba(255,196,120,.2), transparent 70%), linear-gradient(to bottom, rgba(0,0,0,.55), transparent 35%), repeating-linear-gradient(90deg, rgba(0,0,0,.2) 0 1px, transparent 1px 26px), linear-gradient(90deg, #2e1d12, #4a2e1b 50%, #2e1d12)"
+                                                >
+                                                    <div class="top-[330px] left-[278px] absolute bg-black/70 blur-xl rounded-[50%] w-[170px] h-[80px] -rotate-[20deg]"></div>
+                                                    <div class="top-0 left-0 absolute bg-black/50 blur-2xl -mt-[40px] -ml-[70px] rounded-[50%] w-[140px] h-[80px]" x-ref="phoneShadow"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Cena 3D -->
+                                        <div class="absolute inset-0 [perspective:1100px] [perspective-origin:50%_22%]">
+                                            <div class="top-1/2 left-1/2 absolute size-0 preserve-3d">
+
+                                                <!-- Plaquinha NFC -->
+                                                <div class="absolute preserve-3d" style="transform: translate3d(-92px, 20px, -40px) rotateY(20deg)">
+                                                    <div class="absolute bg-[#c9bba6] -mt-[100px] -ml-[64px] rounded-t-[18px] rounded-b-[3px] w-[128px] h-[200px]" style="transform: translateZ(-5px)"></div>
+                                                    <div class="absolute bg-[#b7a790] -mt-[100px] -ml-[64px] rounded-t-[18px] rounded-b-[3px] w-[128px] h-[200px]" style="transform: translateZ(-2.5px)"></div>
+                                                    <div class="absolute -mt-[100px] -ml-[64px] rounded-t-[18px] rounded-b-[3px] w-[128px] h-[200px] overflow-hidden text-stone-900 text-center" style="background: linear-gradient(160deg, #fbf7f1, #e9dfd1)">
+                                                        <p class="top-[14px] absolute inset-x-0 text-[5.5px] text-stone-500 tracking-[.35em]">COZINHA AUTORAL</p>
+                                                        <p class="top-[24px] absolute inset-x-0 font-title text-[21px] leading-none whitespace-nowrap">Bistrô Aurora</p>
+                                                        <div class="top-[52px] left-1/2 absolute bg-stone-900/20 w-8 h-px -translate-x-1/2"></div>
+                                                        <div class="top-[66px] left-1/2 absolute flex justify-center items-center bg-stone-900 shadow-lg rounded-full ring-4 ring-stone-900/10 size-[44px] text-amber-100 -translate-x-1/2">
+                                                            <svg class="size-4 rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                                                <path fill-rule="evenodd" d="M14.188 7.063a8.75 8.75 0 0 0-12.374 0 .75.75 0 0 1-1.061-1.06c4.003-4.004 10.493-4.004 14.496 0a.75.75 0 1 1-1.061 1.06Zm-2.121 2.121a5.75 5.75 0 0 0-8.132 0 .75.75 0 0 1-1.06-1.06 7.25 7.25 0 0 1 10.252 0 .75.75 0 0 1-1.06 1.06Zm-2.122 2.122a2.75 2.75 0 0 0-3.889 0 .75.75 0 1 1-1.06-1.061 4.25 4.25 0 0 1 6.01 0 .75.75 0 0 1-1.06 1.06Zm-2.828 1.06a1.25 1.25 0 0 1 1.768 0 .75.75 0 0 1 0 1.06l-.355.355a.75.75 0 0 1-1.06 0l-.354-.354a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+                                                            </svg>
+                                                        </div>
+                                                        <p class="top-[120px] absolute inset-x-0 font-medium text-[9.5px]">Aproxime o celular</p>
+                                                        <p class="top-[134px] absolute inset-x-0 text-[7px] text-stone-500">e veja o cardápio em vídeo</p>
+                                                        <div class="right-4 bottom-4 left-4 absolute flex justify-between items-end pt-2 border-stone-900/15 border-t">
+                                                            <p class="text-[6px] text-stone-500 tracking-[.3em]">MESA</p>
+                                                            <p class="font-title text-[18px] leading-none">07</p>
+                                                        </div>
+                                                        <div class="absolute inset-0 opacity-0" x-ref="plateGlow" style="background: radial-gradient(circle at 50% 44%, rgba(251,191,36,.55), transparent 55%)"></div>
+                                                    </div>
+                                                    <div class="absolute -mt-[28px] -ml-[64px] w-[128px] h-[56px]" style="transform: translate3d(0, 100px, 28px) rotateX(90deg); background: linear-gradient(#cbbda8, #efe6d9)"></div>
+                                                    <div class="absolute bg-[#a8977e] -mt-[2px] -ml-[64px] w-[128px] h-[4px]" style="transform: translate3d(0, 98px, 56px)"></div>
+                                                    <div class="absolute" x-ref="rings" style="transform: translate3d(0, -12px, 3px)">
+                                                        <span class="absolute opacity-0 shadow-[0_0_12px_rgba(251,191,36,.6)] -mt-[40px] -ml-[40px] border-2 border-amber-200 rounded-full size-[80px]"></span>
+                                                        <span class="absolute opacity-0 shadow-[0_0_12px_rgba(251,191,36,.6)] -mt-[40px] -ml-[40px] border-2 border-amber-200 rounded-full size-[80px]"></span>
+                                                        <span class="absolute opacity-0 shadow-[0_0_12px_rgba(251,191,36,.6)] -mt-[40px] -ml-[40px] border-2 border-amber-200 rounded-full size-[80px]"></span>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Escurecimento de fundo -->
+                                                <div class="absolute bg-stone-950 opacity-0 -mt-[450px] -ml-[450px] w-[900px] h-[900px]" x-ref="dim" style="transform: translateZ(100px)"></div>
+
+                                                <!-- Celular -->
+                                                <div class="absolute -mt-[153px] -ml-[75px] w-[150px] h-[306px] will-change-transform preserve-3d" x-ref="phone">
+                                                    <div class="absolute inset-0 bg-stone-800 rounded-[30px]" style="transform: translateZ(-7px)"></div>
+                                                    <div class="absolute inset-0 bg-stone-700 rounded-[30px]" style="transform: translateZ(-4.5px)"></div>
+                                                    <div class="absolute inset-0 bg-linear-to-br from-stone-500 via-stone-700 to-stone-600 rounded-[30px]" style="transform: translateZ(-2px)"></div>
+                                                    <div class="absolute inset-0 bg-black p-[5px] rounded-[30px] ring-1 ring-white/25">
+                                                        <div class="relative bg-stone-950 rounded-[25px] size-full overflow-hidden">
+
+                                                            <!-- Tela bloqueada -->
+                                                            <div
+                                                                class="absolute inset-0 transition duration-700 ease-out"
+                                                                :class="screen === 'lock' ? 'opacity-100' : 'opacity-0 scale-110 blur-sm'"
+                                                                style="background: radial-gradient(130% 70% at 50% 110%, #ea580c, #7c2d12 35%, #1c1917 72%)"
+                                                            >
+                                                                <p class="mt-16 text-[8px] text-white/70 text-center">sexta-feira</p>
+                                                                <p class="font-extralight text-[50px] text-center leading-none tracking-tight">20:30</p>
+                                                                <div class="bottom-2 left-1/2 absolute bg-white/70 rounded-full w-16 h-1 -translate-x-1/2"></div>
+                                                            </div>
+
+                                                            <!-- Abertura -->
+                                                            <div
+                                                                class="absolute inset-0 flex flex-col justify-center items-center bg-stone-950 transition duration-500"
+                                                                :class="screen === 'splash' ? 'opacity-100' : 'opacity-0'"
+                                                            >
+                                                                <div
+                                                                    class="flex justify-center items-center bg-[#f3ece2] rounded-2xl size-16 font-title text-stone-900 text-2xl transition duration-700 ease-[cubic-bezier(.34,1.56,.64,1)]"
+                                                                    :class="screen === 'splash' ? 'scale-100' : 'scale-50'"
+                                                                >BA</div>
+                                                                <p class="mt-4 font-title text-[17px] leading-none">Bistrô Aurora</p>
+                                                                <p class="mt-1 text-[7px] text-stone-400">Mesa 07</p>
+                                                                <div class="bg-white/10 mt-4 rounded-full w-16 h-1 overflow-hidden">
+                                                                    <div class="bg-amber-200 h-full transition-all duration-[900ms] ease-out" :class="screen === 'splash' ? 'w-full' : 'w-0'"></div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Cardápio -->
+                                                            <div
+                                                                class="absolute inset-0 bg-stone-950 pt-8 overflow-hidden transition-all duration-700 ease-[cubic-bezier(.32,.72,0,1)]"
+                                                                :class="[screen === 'menu' ? 'opacity-100' : 'opacity-0', sheet ? 'scale-[.92] rounded-[18px] brightness-[.45]' : '']"
+                                                            >
+                                                                <div class="flex justify-between items-end px-2">
+                                                                    <div>
+                                                                        <p class="font-title text-[16px] leading-none">Bistrô Aurora</p>
+                                                                        <p class="mt-1 text-[6.5px] text-stone-400">Mesa 07 · Aberto agora</p>
+                                                                    </div>
+                                                                    <div class="flex justify-center items-center bg-[#f3ece2] rounded-lg size-8 font-title text-[11px] text-stone-900">BA</div>
+                                                                </div>
+                                                                <div class="flex gap-x-1 mt-2 px-2 overflow-hidden">
+                                                                    <span class="bg-stone-100 px-2 py-1 border border-stone-100 rounded-full font-medium text-[6.5px] text-stone-950">Todos</span>
+                                                                    <span class="bg-white/5 px-2 py-1 border border-white/10 rounded-full text-[6.5px]">Pratos</span>
+                                                                    <span class="bg-white/5 px-2 py-1 border border-white/10 rounded-full text-[6.5px]">Drinks</span>
+                                                                    <span class="bg-white/5 px-2 py-1 border border-white/10 rounded-full text-[6.5px]">Doces</span>
+                                                                </div>
+                                                                <div class="mt-2 overflow-hidden">
+                                                                    <div class="relative grid grid-cols-2 will-change-transform" x-ref="feed">
+                                                                        <template x-for="(dish, index) in dishes" :key="dish.name">
+                                                                            <div
+                                                                                class="relative bg-stone-900 aspect-3/4 overflow-hidden transition duration-700 ease-[cubic-bezier(.16,1,.3,1)]"
+                                                                                :class="screen === 'menu' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'"
+                                                                                :style="`transition-delay: ${screen === 'menu' ? 150 + index * 70 : 0}ms`"
+                                                                            >
+                                                                                <div class="absolute inset-0 flex justify-center items-center opacity-70 blur-xl saturate-150 text-[110px]" x-text="dish.emoji"></div>
+                                                                                <div class="absolute inset-0 flex justify-center items-center text-[34px] kenburns" :style="`animation-delay: -${index * .8}s`" x-text="dish.emoji"></div>
+                                                                                <template x-if="dish.hot">
+                                                                                    <div class="absolute inset-0">
+                                                                                        <span class="top-[24%] left-[40%] absolute bg-white/50 blur-[3px] rounded-full w-2 h-4 steam"></span>
+                                                                                        <span class="top-[20%] left-[55%] absolute bg-white/50 blur-[3px] rounded-full w-2 h-4 steam" style="animation-delay: 1.2s"></span>
+                                                                                    </div>
+                                                                                </template>
+                                                                                <div class="absolute inset-0 bg-linear-to-t from-stone-950 to-60% to-transparent"></div>
+                                                                                <div class="bottom-2 left-2 absolute">
+                                                                                    <p class="font-medium text-[7px]" x-text="dish.name"></p>
+                                                                                    <p class="text-[6px] text-stone-400" x-text="dish.price"></p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </template>
+                                                                        <span class="top-[140px] left-[35px] absolute bg-white/5 opacity-0 -mt-[14px] -ml-[14px] rounded-full size-8 liquid-glass" x-ref="tap"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Produto -->
+                                                            <div
+                                                                class="top-8 right-0 bottom-0 left-0 absolute bg-stone-900 shadow-[0_-20px_40px_rgba(0,0,0,.6)] rounded-t-[20px] overflow-hidden transition-transform duration-700 ease-[cubic-bezier(.32,.72,0,1)]"
+                                                                :class="sheet ? 'translate-y-0' : 'translate-y-full'"
+                                                            >
+                                                                <div class="relative h-[116px] overflow-hidden">
+                                                                    <div class="absolute inset-0 flex justify-center items-center opacity-70 blur-2xl saturate-150 text-[220px]" x-text="dishes[2].emoji"></div>
+                                                                    <div class="absolute inset-0 flex justify-center items-center text-[78px] kenburns" x-text="dishes[2].emoji"></div>
+                                                                    <span class="top-[24%] left-[40%] absolute bg-white/50 blur-[4px] rounded-full w-2 h-8 steam"></span>
+                                                                    <span class="top-[18%] left-[52%] absolute bg-white/50 blur-[4px] rounded-full w-2 h-8 steam" style="animation-delay: .9s"></span>
+                                                                    <span class="top-[26%] left-[62%] absolute bg-white/50 blur-[4px] rounded-full w-2 h-8 steam" style="animation-delay: 1.8s"></span>
+                                                                    <div class="absolute inset-0 bg-linear-to-t from-stone-900 to-50% to-transparent"></div>
+                                                                    <div class="top-2 left-1/2 absolute bg-white/50 rounded-full w-8 h-1 -translate-x-1/2"></div>
+                                                                </div>
+                                                                <div class="space-y-2 px-2 pt-1">
+                                                                    <p class="font-title text-[21px] leading-none" x-text="dishes[2].name"></p>
+                                                                    <p class="text-[7px] text-stone-400 leading-relaxed">Talharim fresco na manteiga de sálvia, finalizado com parmesão ralado na hora.</p>
+                                                                    <div class="bg-white/5 border border-white/10 rounded-lg divide-y divide-white/10 text-[7px]">
+                                                                        <div class="flex justify-between items-center bg-white/5 px-2 py-2">
+                                                                            <p class="flex items-center gap-x-2"><span class="border-[2.5px] border-amber-300 rounded-full size-2"></span>Individual</p>
+                                                                            <p class="text-stone-300">R$ 62,00</p>
+                                                                        </div>
+                                                                        <div class="flex justify-between items-center px-2 py-2">
+                                                                            <p class="flex items-center gap-x-2"><span class="border border-white/30 rounded-full size-2"></span>Para dividir</p>
+                                                                            <p class="text-stone-300">R$ 108,00</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p class="text-[6.5px] text-amber-200/70">Alérgenos: glúten e lactose</p>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Ilha de notificação -->
+                                                            <div
+                                                                class="top-[6px] left-1/2 z-30 absolute bg-black overflow-hidden transition-all -translate-x-1/2 duration-500 ease-[cubic-bezier(.34,1.3,.64,1)]"
+                                                                :class="island ? 'w-[126px] h-[30px] rounded-[15px]' : 'w-[46px] h-[13px] rounded-[7px]'"
+                                                            >
+                                                                <div class="flex items-center gap-x-2 px-2 h-full whitespace-nowrap transition duration-300" :class="island ? 'opacity-100 delay-200' : 'opacity-0'">
+                                                                    <div class="flex justify-center items-center bg-[#f3ece2] rounded-full size-[19px] font-title text-[9px] text-stone-900 shrink-0">BA</div>
+                                                                    <div>
+                                                                        <p class="font-medium text-[7px] leading-tight">Bistrô Aurora</p>
+                                                                        <p class="text-[6px] text-stone-400 leading-tight">Abrindo cardápio</p>
+                                                                    </div>
+                                                                    <div class="ml-auto border border-amber-300/30 border-t-amber-300 rounded-full size-4 animate-spin shrink-0"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <span class="top-4 left-4 absolute flex items-center gap-x-2 bg-white/5 px-2 py-1 rounded-full text-[9px] text-stone-400 tracking-[.2em] liquid-glass">
+                                            <span class="bg-red-500 rounded-full size-2 animate-pulse"></span>
+                                            DEMONSTRAÇÃO
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ol class="lg:col-span-5 border-white/10 border-t">
+                            <li class="relative border-white/10 border-b" data-reveal>
+                                <button class="group flex gap-x-4 py-8 w-full text-left cursor-pointer" @click="goTo(0)" type="button">
+                                    <span class="font-title text-3xl leading-none duration-500" :class="stage === 0 ? 'text-amber-200' : 'text-stone-600'">01</span>
+                                    <span class="flex-1">
+                                        <span class="block font-medium text-lg duration-500" :class="stage === 0 ? 'text-stone-100' : 'text-stone-400 group-hover:text-stone-100'">O cliente aproxima o celular</span>
+                                        <span class="block mt-2 text-stone-400 text-sm leading-relaxed">Encosta na plaquinha da mesa e pronto. Sem abrir câmera, sem enquadrar código, sem baixar aplicativo.</span>
+                                    </span>
+                                </button>
+                                <span class="-bottom-px left-0 absolute bg-amber-200 w-full h-px origin-left" x-ref="stepBar0" style="transform: scaleX(0)"></span>
+                            </li>
+                            <li class="relative border-white/10 border-b" data-reveal style="--delay: 80ms">
+                                <button class="group flex gap-x-4 py-8 w-full text-left cursor-pointer" @click="goTo(1)" type="button">
+                                    <span class="font-title text-3xl leading-none duration-500" :class="stage === 1 ? 'text-amber-200' : 'text-stone-600'">02</span>
+                                    <span class="flex-1">
+                                        <span class="block font-medium text-lg duration-500" :class="stage === 1 ? 'text-stone-100' : 'text-stone-400 group-hover:text-stone-100'">Seu cardápio abre na hora</span>
+                                        <span class="block mt-2 text-stone-400 text-sm leading-relaxed">Com a sua marca e já identificando a mesa. Em segundos ele está navegando pelos seus pratos.</span>
+                                    </span>
+                                </button>
+                                <span class="-bottom-px left-0 absolute bg-amber-200 w-full h-px origin-left" x-ref="stepBar1" style="transform: scaleX(0)"></span>
+                            </li>
+                            <li class="relative border-white/10 border-b" data-reveal style="--delay: 160ms">
+                                <button class="group flex gap-x-4 py-8 w-full text-left cursor-pointer" @click="goTo(2)" type="button">
+                                    <span class="font-title text-3xl leading-none duration-500" :class="stage === 2 ? 'text-amber-200' : 'text-stone-600'">03</span>
+                                    <span class="flex-1">
+                                        <span class="block font-medium text-lg duration-500" :class="stage === 2 ? 'text-stone-100' : 'text-stone-400 group-hover:text-stone-100'">Os pratos ganham vida</span>
+                                        <span class="block mt-2 text-stone-400 text-sm leading-relaxed">Cada item é um vídeo curto rodando em loop. Enquanto ele rola a tela, o seu prato está se vendendo sozinho.</span>
+                                    </span>
+                                </button>
+                                <span class="-bottom-px left-0 absolute bg-amber-200 w-full h-px origin-left" x-ref="stepBar2" style="transform: scaleX(0)"></span>
+                            </li>
+                            <li class="relative border-white/10 border-b" data-reveal style="--delay: 240ms">
+                                <button class="group flex gap-x-4 py-8 w-full text-left cursor-pointer" @click="goTo(3)" type="button">
+                                    <span class="font-title text-3xl leading-none duration-500" :class="stage === 3 ? 'text-amber-200' : 'text-stone-600'">04</span>
+                                    <span class="flex-1">
+                                        <span class="block font-medium text-lg duration-500" :class="stage === 3 ? 'text-stone-100' : 'text-stone-400 group-hover:text-stone-100'">Um toque e a decisão está tomada</span>
+                                        <span class="block mt-2 text-stone-400 text-sm leading-relaxed">Vídeo em destaque, descrição, tamanhos e preços. Ele chama o garçom já sabendo o que quer.</span>
+                                    </span>
+                                </button>
+                                <span class="-bottom-px left-0 absolute bg-amber-200 w-full h-px origin-left" x-ref="stepBar3" style="transform: scaleX(0)"></span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vantagens -->
+            <section class="relative pt-32 scroll-mt-16" id="vantagens">
+                <div class="top-1/3 right-0 absolute bg-radial from-orange-600/10 to-70% to-transparent blur-2xl w-[700px] h-[700px] pointer-events-none"></div>
+                <div class="relative mx-auto px-4 max-w-6xl">
+                    <div class="max-w-2xl">
+                        <p class="text-amber-200/70 text-sm tracking-[.25em]" data-reveal>POR QUE VÍDEO VENDE</p>
+                        <h2 class="mt-4 font-title text-5xl sm:text-7xl leading-[.95]" data-reveal style="--delay: 100ms">A gente come <em class="text-gold">primeiro com os olhos</em></h2>
+                        <p class="mt-4 text-stone-400 sm:text-lg leading-relaxed" data-reveal style="--delay: 200ms">Movimento, textura e vapor fazem o que nenhuma descrição consegue: transformam curiosidade em fome. E fome vira pedido.</p>
+                    </div>
+
+                    <div class="gap-4 grid lg:grid-cols-6 mt-16">
+                        <div class="lg:col-span-4 bg-white/5 p-8 border border-white/10 rounded-3xl overflow-hidden" data-reveal data-spotlight>
+                            <div class="items-center gap-8 grid sm:grid-cols-2">
+                                <div>
+                                    <div class="flex justify-center items-center bg-amber-300/10 rounded-2xl ring-1 ring-amber-300/20 size-16 text-amber-200"><svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z"/>
+                                    </svg></div>
+                                    <p class="mt-8 font-title text-3xl leading-tight">Desejo na hora da decisão</p>
+                                    <p class="mt-4 text-stone-400 leading-relaxed">Quando o cliente vê o queijo puxando e o molho borbulhando, a escolha deixa de ser pelo preço e passa a ser pela vontade.</p>
+                                </div>
+                                <div class="justify-items-center gap-4 grid grid-cols-3 pt-4" aria-hidden="true">
+                                    <template x-for="(dish, index) in [dishes[3], dishes[0], dishes[4]]" :key="dish.name">
+                                        <div class="relative bg-stone-900 rounded-2xl ring-1 ring-white/10 w-full max-w-32 aspect-3/4 overflow-hidden" :class="index === 1 ? '-translate-y-4 scale-110 z-10 shadow-2xl shadow-black' : 'opacity-70'">
+                                            <div class="absolute inset-0 flex justify-center items-center opacity-70 blur-xl saturate-150 text-[120px]" x-text="dish.emoji"></div>
+                                            <div class="absolute inset-0 flex justify-center items-center text-4xl kenburns" :style="`animation-delay: -${index}s`" x-text="dish.emoji"></div>
+                                            <div class="absolute inset-0 bg-linear-to-t from-stone-950 to-60% to-transparent"></div>
+                                            <p class="bottom-2 left-2 absolute font-medium text-[9px]" x-text="dish.name"></p>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-2 bg-white/5 p-8 border border-white/10 rounded-3xl" data-reveal data-spotlight style="--delay: 100ms">
+                            <div class="flex justify-center items-center bg-amber-300/10 rounded-2xl ring-1 ring-amber-300/20 size-16 text-amber-200"><svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"/>
+                            </svg></div>
+                            <p class="mt-8 font-title text-3xl leading-tight">Ticket médio maior</p>
+                            <p class="mt-4 text-stone-400 leading-relaxed">Drink e sobremesa são pedidos por impulso. Em vídeo, o "já que estamos aqui" acontece sem o garçom insistir.</p>
+                            <div class="space-y-2 bg-stone-950/60 mt-8 p-4 border border-white/10 border-dashed rounded-xl font-mono text-xs" aria-hidden="true">
+                                <p class="flex justify-between ticket-line"><span>1× Massa Aurora</span><span class="text-stone-400">62,00</span></p>
+                                <p class="flex justify-between text-amber-200 ticket-line" style="animation-delay: .9s"><span>+ 1× Soda da Casa</span><span>18,00</span></p>
+                                <p class="flex justify-between text-amber-200 ticket-line" style="animation-delay: 1.8s"><span>+ 1× Cacau &amp; Caramelo</span><span>29,00</span></p>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-2 bg-white/5 p-8 border border-white/10 rounded-3xl" data-reveal data-spotlight>
+                            <div class="flex justify-center items-center bg-amber-300/10 rounded-2xl ring-1 ring-amber-300/20 size-16 text-amber-200"><svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/>
+                            </svg></div>
+                            <p class="mt-8 font-title text-3xl leading-tight">Pedido rápido, mesa girando</p>
+                            <p class="mt-4 text-stone-400 leading-relaxed">Quem vê o prato entende o que vai receber. Menos dúvidas, menos idas do garçom até a mesa e mais atendimentos no mesmo turno.</p>
+                        </div>
+
+                        <div class="lg:col-span-4 bg-white/5 p-8 border border-white/10 rounded-3xl" data-reveal data-spotlight style="--delay: 100ms">
+                            <div class="items-center gap-8 grid sm:grid-cols-2">
+                                <div>
+                                    <div class="flex justify-center items-center bg-amber-300/10 rounded-2xl ring-1 ring-amber-300/20 size-16 text-amber-200"><svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z"/>
+                                    </svg></div>
+                                    <p class="mt-8 font-title text-3xl leading-tight">Expectativa certa, cliente que volta</p>
+                                    <p class="mt-4 text-stone-400 leading-relaxed">O que ele vê é o que chega à mesa. Menos surpresa com tamanho e apresentação, menos reclamação e mais avaliação boa.</p>
+                                </div>
+                                <div class="flex justify-center items-center gap-4" aria-hidden="true">
+                                    <div class="text-center">
+                                        <div class="flex justify-center items-center bg-stone-900 rounded-2xl ring-1 ring-white/10 size-32 text-5xl">🍝</div>
+                                        <p class="mt-2 text-stone-400 text-xs">No vídeo</p>
+                                    </div>
+                                    <p class="font-title text-amber-200 text-4xl">=</p>
+                                    <div class="text-center">
+                                        <div class="flex justify-center items-center bg-stone-900 rounded-full ring-1 ring-white/10 size-32 text-5xl">🍝</div>
+                                        <p class="mt-2 text-stone-400 text-xs">Na mesa</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NFC -->
+            <section class="relative pt-32 scroll-mt-16" id="nfc">
+                <div class="items-center gap-16 grid lg:grid-cols-2 mx-auto px-4 max-w-6xl">
+                    <div class="relative max-lg:order-last" data-reveal aria-hidden="true">
+                        <div class="absolute inset-0 bg-radial from-amber-500/20 to-65% to-transparent blur-2xl"></div>
+                        <div class="relative flex justify-center items-center h-[400px] sm:h-[460px] lg:h-[620px] [perspective:1200px]">
+                            <div class="bottom-[50px] sm:bottom-[60px] lg:bottom-[90px] left-1/2 absolute bg-black/70 blur-2xl rounded-[50%] w-64 lg:w-80 h-8 -translate-x-1/2"></div>
+                            <div class="preserve-3d plate-sway">
+                                <div class="preserve-3d [--s:1.7] lg:[--s:2.3]" style="transform: scale3d(var(--s), var(--s), var(--s)) translateY(-20px)">
+                                    <div class="absolute bg-[#c9bba6] -mt-[100px] -ml-[64px] rounded-t-[18px] rounded-b-[3px] w-[128px] h-[200px]" style="transform: translateZ(-5px)"></div>
+                                    <div class="absolute bg-[#b7a790] -mt-[100px] -ml-[64px] rounded-t-[18px] rounded-b-[3px] w-[128px] h-[200px]" style="transform: translateZ(-2.5px)"></div>
+                                    <div class="absolute -mt-[100px] -ml-[64px] rounded-t-[18px] rounded-b-[3px] w-[128px] h-[200px] overflow-hidden text-stone-900 text-center" style="background: linear-gradient(160deg, #fbf7f1, #e9dfd1)">
+                                        <p class="top-[14px] absolute inset-x-0 text-[5.5px] text-stone-500 tracking-[.35em]">COZINHA AUTORAL</p>
+                                        <p class="top-[24px] absolute inset-x-0 font-title text-[21px] leading-none whitespace-nowrap">Bistrô Aurora</p>
+                                        <div class="top-[52px] left-1/2 absolute bg-stone-900/20 w-8 h-px -translate-x-1/2"></div>
+                                        <div class="top-[66px] left-1/2 absolute flex justify-center items-center bg-stone-900 shadow-lg rounded-full ring-4 ring-stone-900/10 size-[44px] text-amber-100 -translate-x-1/2">
+                                            <svg class="size-4 rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                                <path fill-rule="evenodd" d="M14.188 7.063a8.75 8.75 0 0 0-12.374 0 .75.75 0 0 1-1.061-1.06c4.003-4.004 10.493-4.004 14.496 0a.75.75 0 1 1-1.061 1.06Zm-2.121 2.121a5.75 5.75 0 0 0-8.132 0 .75.75 0 0 1-1.06-1.06 7.25 7.25 0 0 1 10.252 0 .75.75 0 0 1-1.06 1.06Zm-2.122 2.122a2.75 2.75 0 0 0-3.889 0 .75.75 0 1 1-1.06-1.061 4.25 4.25 0 0 1 6.01 0 .75.75 0 0 1-1.06 1.06Zm-2.828 1.06a1.25 1.25 0 0 1 1.768 0 .75.75 0 0 1 0 1.06l-.355.355a.75.75 0 0 1-1.06 0l-.354-.354a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </div>
+                                        <p class="top-[120px] absolute inset-x-0 font-medium text-[9.5px]">Aproxime o celular</p>
+                                        <p class="top-[134px] absolute inset-x-0 text-[7px] text-stone-500">e veja o cardápio em vídeo</p>
+                                        <div class="right-4 bottom-4 left-4 absolute flex justify-between items-end pt-2 border-stone-900/15 border-t">
+                                            <p class="text-[6px] text-stone-500 tracking-[.3em]">MESA</p>
+                                            <p class="font-title text-[18px] leading-none">07</p>
+                                        </div>
+                                        <div class="absolute inset-0 bg-linear-to-br from-white/60 via-transparent to-40% to-transparent"></div>
+                                    </div>
+                                    <div class="absolute -mt-[28px] -ml-[64px] w-[128px] h-[56px]" style="transform: translate3d(0, 100px, 28px) rotateX(90deg); background: linear-gradient(#cbbda8, #efe6d9)"></div>
+                                    <div class="absolute bg-[#a8977e] -mt-[2px] -ml-[64px] w-[128px] h-[4px]" style="transform: translate3d(0, 98px, 56px)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-amber-200/70 text-sm tracking-[.25em]" data-reveal>PLAQUINHA NFC</p>
+                        <h2 class="mt-4 font-title text-5xl sm:text-6xl leading-[.95]" data-reveal style="--delay: 100ms">Por que NFC e não só <em class="text-gold">um QR Code?</em></h2>
+                        <p class="mt-4 text-stone-400 sm:text-lg leading-relaxed" data-reveal style="--delay: 200ms">Porque cada segundo entre o cliente sentar e ver o cardápio é uma vontade que esfria.</p>
+
+                        <div class="space-y-4 mt-8">
+                            <div class="p-8 border border-white/10 rounded-2xl" data-reveal>
+                                <div class="flex justify-between items-center">
+                                    <p class="flex items-center gap-x-2 text-stone-400"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path fill-rule="evenodd" d="M3.75 2A1.75 1.75 0 0 0 2 3.75v3.5C2 8.216 2.784 9 3.75 9h3.5A1.75 1.75 0 0 0 9 7.25v-3.5A1.75 1.75 0 0 0 7.25 2h-3.5ZM3.5 3.75a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.5a.25.25 0 0 1-.25.25h-3.5a.25.25 0 0 1-.25-.25v-3.5ZM3.75 11A1.75 1.75 0 0 0 2 12.75v3.5c0 .966.784 1.75 1.75 1.75h3.5A1.75 1.75 0 0 0 9 16.25v-3.5A1.75 1.75 0 0 0 7.25 11h-3.5Zm-.25 1.75a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.5a.25.25 0 0 1-.25.25h-3.5a.25.25 0 0 1-.25-.25v-3.5Zm7.5-9c0-.966.784-1.75 1.75-1.75h3.5c.966 0 1.75.784 1.75 1.75v3.5A1.75 1.75 0 0 1 16.25 9h-3.5A1.75 1.75 0 0 1 11 7.25v-3.5Zm1.75-.25a.25.25 0 0 0-.25.25v3.5c0 .138.112.25.25.25h3.5a.25.25 0 0 0 .25-.25v-3.5a.25.25 0 0 0-.25-.25h-3.5Zm-7.26 1a1 1 0 0 0-1 1v.01a1 1 0 0 0 1 1h.01a1 1 0 0 0 1-1V5.5a1 1 0 0 0-1-1h-.01Zm9 0a1 1 0 0 0-1 1v.01a1 1 0 0 0 1 1h.01a1 1 0 0 0 1-1V5.5a1 1 0 0 0-1-1h-.01Zm-9 9a1 1 0 0 0-1 1v.01a1 1 0 0 0 1 1h.01a1 1 0 0 0 1-1v-.01a1 1 0 0 0-1-1h-.01Zm9 0a1 1 0 0 0-1 1v.01a1 1 0 0 0 1 1h.01a1 1 0 0 0 1-1v-.01a1 1 0 0 0-1-1h-.01Zm-3.5-1.5a1 1 0 0 1 1-1H12a1 1 0 0 1 1 1v.01a1 1 0 0 1-1 1h-.01a1 1 0 0 1-1-1V12Zm6-1a1 1 0 0 0-1 1v.01a1 1 0 0 0 1 1H17a1 1 0 0 0 1-1V12a1 1 0 0 0-1-1h-.01Zm-1 6a1 1 0 0 1 1-1H17a1 1 0 0 1 1 1v.01a1 1 0 0 1-1 1h-.01a1 1 0 0 1-1-1V17Zm-4-1a1 1 0 0 0-1 1v.01a1 1 0 0 0 1 1H12a1 1 0 0 0 1-1V17a1 1 0 0 0-1-1h-.01Z" clip-rule="evenodd"/>
+                                    </svg>QR Code</p>
+                                    <p class="text-stone-400 text-sm">4 passos</p>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-2 mt-4 text-stone-400 text-xs">
+                                    <span class="px-4 py-2 border border-white/10 rounded-full">Abrir a câmera</span>
+                                    <svg class="size-4 text-stone-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path fill-rule="evenodd" d="M6.22 4.22a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 1 0 1.06l-3.25 3.25a.75.75 0 0 1-1.06-1.06L8.94 8 6.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="px-4 py-2 border border-white/10 rounded-full">Enquadrar</span>
+                                    <svg class="size-4 text-stone-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path fill-rule="evenodd" d="M6.22 4.22a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 1 0 1.06l-3.25 3.25a.75.75 0 0 1-1.06-1.06L8.94 8 6.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="px-4 py-2 border border-white/10 rounded-full">Esperar focar</span>
+                                    <svg class="size-4 text-stone-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path fill-rule="evenodd" d="M6.22 4.22a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 1 0 1.06l-3.25 3.25a.75.75 0 0 1-1.06-1.06L8.94 8 6.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="px-4 py-2 border border-white/10 rounded-full">Tocar no link</span>
+                                </div>
+                            </div>
+                            <div class="bg-linear-to-br from-amber-300/10 to-transparent shadow-[0_0_60px_-20px_rgba(245,158,11,.5)] p-8 border border-amber-300/30 rounded-2xl" data-reveal style="--delay: 100ms">
+                                <div class="flex justify-between items-center">
+                                    <p class="flex items-center gap-x-2 text-amber-200"><svg class="size-5 rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path fill-rule="evenodd" d="M.676 6.941A12.964 12.964 0 0 1 10 3c3.657 0 6.963 1.511 9.324 3.941a.75.75 0 0 1-.008 1.053l-.353.354a.75.75 0 0 1-1.069-.008C15.894 6.28 13.097 5 10 5 6.903 5 4.106 6.28 2.106 8.34a.75.75 0 0 1-1.069.008l-.353-.354a.75.75 0 0 1-.008-1.053Zm2.825 2.833A8.976 8.976 0 0 1 10 7a8.976 8.976 0 0 1 6.499 2.774.75.75 0 0 1-.011 1.049l-.354.354a.75.75 0 0 1-1.072-.012A6.978 6.978 0 0 0 10 9c-1.99 0-3.786.83-5.061 2.165a.75.75 0 0 1-1.073.012l-.354-.354a.75.75 0 0 1-.01-1.05Zm2.82 2.84A4.989 4.989 0 0 1 10 11c1.456 0 2.767.623 3.68 1.614a.75.75 0 0 1-.022 1.039l-.354.354a.75.75 0 0 1-1.085-.026A2.99 2.99 0 0 0 10 13c-.88 0-1.67.377-2.22.981a.75.75 0 0 1-1.084.026l-.354-.354a.75.75 0 0 1-.021-1.039Zm2.795 2.752a1.248 1.248 0 0 1 1.768 0 .75.75 0 0 1 0 1.06l-.354.354a.75.75 0 0 1-1.06 0l-.354-.353a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+                                    </svg>Plaquinha NFC</p>
+                                    <p class="text-amber-200 text-sm">1 gesto</p>
+                                </div>
+                                <div class="flex items-center gap-2 mt-4 text-xs">
+                                    <span class="bg-amber-200 px-4 py-2 rounded-full font-medium text-stone-950">Encostar</span>
+                                    <svg class="size-4 text-amber-200/70" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path fill-rule="evenodd" d="M6.22 4.22a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 1 0 1.06l-3.25 3.25a.75.75 0 0 1-1.06-1.06L8.94 8 6.22 5.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+                                    </svg>
+                                    <span class="text-amber-200">Cardápio aberto</span>
+                                </div>
+                                <ul class="space-y-4 mt-8 pt-8 border-amber-300/20 border-t text-stone-400 text-sm">
+                                    <li class="flex gap-x-4"><svg class="size-4 text-amber-200 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                                    </svg>Não depende da câmera nem da iluminação do salão</li>
+                                    <li class="flex gap-x-4"><svg class="size-4 text-amber-200 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                                    </svg>Nada de adesivo gasto ou descolando da mesa</li>
+                                    <li class="flex gap-x-4"><svg class="size-4 text-amber-200 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                                    </svg>Seu cardápio também tem um link próprio para Instagram e WhatsApp</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Implantação -->
+            <section class="relative pt-32">
+                <div class="mx-auto px-4 max-w-6xl">
+                    <div class="mx-auto max-w-2xl text-center">
+                        <p class="text-amber-200/70 text-sm tracking-[.25em]" data-reveal>IMPLANTAÇÃO SIMPLES</p>
+                        <h2 class="mt-4 font-title text-5xl sm:text-7xl leading-[.95]" data-reveal style="--delay: 100ms">Do cadastro à mesa <em class="text-gold">em 3 passos</em></h2>
+                    </div>
+                    <div class="relative gap-8 grid md:grid-cols-3 mt-16">
+                        <div class="hidden md:block top-8 right-[16%] left-[16%] absolute bg-linear-to-r from-transparent via-amber-200/30 to-transparent h-px"></div>
+                        <div class="relative text-center" data-reveal>
+                            <div class="flex justify-center items-center bg-stone-950 mx-auto rounded-full ring-1 ring-amber-200/30 size-16 font-title text-amber-200 text-2xl">1</div>
+                            <p class="mt-8 font-title text-3xl">Criamos suas plaquinhas</p>
+                            <p class="mx-auto mt-4 max-w-xs text-stone-400 leading-relaxed">Plaquinhas NFC em L com a identidade do seu restaurante, cada uma vinculada a uma mesa.</p>
+                        </div>
+                        <div class="relative text-center" data-reveal style="--delay: 120ms">
+                            <div class="flex justify-center items-center bg-stone-950 mx-auto rounded-full ring-1 ring-amber-200/30 size-16 font-title text-amber-200 text-2xl">2</div>
+                            <p class="mt-8 font-title text-3xl">Você cadastra os pratos</p>
+                            <p class="mx-auto mt-4 max-w-xs text-stone-400 leading-relaxed">Grave com o celular mesmo, até 15 segundos por prato. A plataforma otimiza o vídeo e gera a capa sozinha.</p>
+                        </div>
+                        <div class="relative text-center" data-reveal style="--delay: 240ms">
+                            <div class="flex justify-center items-center bg-stone-950 mx-auto rounded-full ring-1 ring-amber-200/30 size-16 font-title text-amber-200 text-2xl">3</div>
+                            <p class="mt-8 font-title text-3xl">Coloque nas mesas e venda</p>
+                            <p class="mx-auto mt-4 max-w-xs text-stone-400 leading-relaxed">O cliente aproxima, assiste e pede. Você acompanha quais pratos estão chamando mais atenção.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Preços -->
+            <section class="relative pt-32 scroll-mt-16" id="precos">
+                <div class="top-1/4 left-1/2 absolute bg-radial from-amber-500/10 to-70% to-transparent blur-2xl w-[900px] h-[600px] -translate-x-1/2 pointer-events-none"></div>
+                <div class="relative mx-auto px-4 max-w-6xl">
+                    <div class="mx-auto max-w-2xl text-center">
+                        <p class="text-amber-200/70 text-sm tracking-[.25em]" data-reveal>PREÇOS</p>
+                        <h2 class="mt-4 font-title text-5xl sm:text-7xl leading-[.95]" data-reveal style="--delay: 100ms">Comece hoje, <em class="text-gold">cresça depois</em></h2>
+                        <p class="mt-4 text-stone-400 sm:text-lg leading-relaxed" data-reveal style="--delay: 200ms">Comece com o cardápio em vídeo e, quando os pedidos pelo celular chegarem, é só mudar de plano.</p>
+                    </div>
+                    <div class="gap-4 grid md:grid-cols-2 mx-auto mt-16 max-w-4xl">
+                        <div class="flex flex-col bg-linear-to-br from-amber-300/10 to-transparent shadow-[0_0_60px_-20px_rgba(245,158,11,.5)] p-8 border border-amber-300/30 rounded-3xl" data-reveal>
+                            <p class="flex items-center gap-x-2 text-amber-200"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                <path fill-rule="evenodd" d="M1 4.75C1 3.784 1.784 3 2.75 3h14.5c.966 0 1.75.784 1.75 1.75v10.515a1.75 1.75 0 0 1-1.75 1.75h-1.5c-.078 0-.155-.005-.23-.015H4.48c-.075.01-.152.015-.23.015h-1.5A1.75 1.75 0 0 1 1 15.265V4.75Zm16.5 7.385V11.01a.25.25 0 0 0-.25-.25h-1.5a.25.25 0 0 0-.25.25v1.125c0 .138.112.25.25.25h1.5a.25.25 0 0 0 .25-.25Zm0 2.005a.25.25 0 0 0-.25-.25h-1.5a.25.25 0 0 0-.25.25v1.125c0 .108.069.2.165.235h1.585a.25.25 0 0 0 .25-.25v-1.11Zm-15 1.11v-1.11a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25v1.125a.25.25 0 0 1-.164.235H2.75a.25.25 0 0 1-.25-.25Zm2-4.24v1.125a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25V11.01a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25Zm13-2.005V7.88a.25.25 0 0 0-.25-.25h-1.5a.25.25 0 0 0-.25.25v1.125c0 .138.112.25.25.25h1.5a.25.25 0 0 0 .25-.25ZM4.25 7.63a.25.25 0 0 1 .25.25v1.125a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25V7.88a.25.25 0 0 1 .25-.25h1.5Zm0-3.13a.25.25 0 0 1 .25.25v1.125a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25V4.75a.25.25 0 0 1 .25-.25h1.5Zm11.5 1.625a.25.25 0 0 1-.25-.25V4.75a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25v1.125a.25.25 0 0 1-.25.25h-1.5Zm-9 3.125a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z" clip-rule="evenodd"/>
+                            </svg>Cardápio em vídeo</p>
+                            <p class="flex items-baseline mt-8">
+                                <span class="mr-2 text-stone-400">R$</span>
+                                <span class="font-title text-7xl leading-none">79</span>
+                                <span class="font-title text-3xl">,90</span>
+                                <span class="ml-2 text-stone-400 text-sm">/mês</span>
+                            </p>
+                            <p class="mt-4 text-stone-400 leading-relaxed">Seus pratos em vídeo na mesa do cliente, com tudo que o cardápio precisa.</p>
+                            <ul class="space-y-4 mt-8 pt-8 border-amber-300/20 border-t text-stone-400 text-sm">
+                                <li class="flex gap-x-4"><svg class="size-4 text-amber-200 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                                </svg>Vídeo ou foto em cada prato</li>
+                                <li class="flex gap-x-4"><svg class="size-4 text-amber-200 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                                </svg>Categorias, tamanhos e adicionais</li>
+                                <li class="flex gap-x-4"><svg class="size-4 text-amber-200 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                                </svg>Ingredientes e alérgenos à vista</li>
+                                <li class="flex gap-x-4"><svg class="size-4 text-amber-200 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                                </svg>Pratos e preços alterados na hora pelo painel</li>
+                                <li class="flex gap-x-4"><svg class="size-4 text-amber-200 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                                </svg>Métricas dos pratos mais vistos e tocados</li>
+                                <li class="flex gap-x-4"><svg class="size-4 text-amber-200 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                                </svg>Link próprio para Instagram e WhatsApp</li>
+                            </ul>
+                            <div class="mt-auto pt-8">
+                                <button class="inline-flex justify-center items-center px-8 py-4 border border-white/10 rounded-full w-full font-medium text-stone-600 cursor-not-allowed" type="button" disabled>Em breve</button>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col bg-white/5 p-8 border border-white/10 rounded-3xl" data-reveal style="--delay: 100ms">
+                            <p class="flex items-center gap-x-2 text-stone-400"><svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                <path fill-rule="evenodd" d="M6 5v1H4.667a1.75 1.75 0 0 0-1.743 1.598l-.826 9.5A1.75 1.75 0 0 0 3.84 19H16.16a1.75 1.75 0 0 0 1.743-1.902l-.826-9.5A1.75 1.75 0 0 0 15.333 6H14V5a4 4 0 0 0-8 0Zm4-2.5A2.5 2.5 0 0 0 7.5 5v1h5V5A2.5 2.5 0 0 0 10 2.5ZM7.5 10a2.5 2.5 0 0 0 5 0V8.75a.75.75 0 0 1 1.5 0V10a4 4 0 0 1-8 0V8.75a.75.75 0 0 1 1.5 0V10Z" clip-rule="evenodd"/>
+                            </svg>Cardápio com pedidos</p>
+                            <p class="flex items-baseline mt-8">
+                                <span class="mr-2 text-stone-400">R$</span>
+                                <span class="font-title text-7xl leading-none">159</span>
+                                <span class="font-title text-3xl">,90</span>
+                                <span class="ml-2 text-stone-400 text-sm">/mês</span>
+                            </p>
+                            <p class="mt-4 text-stone-400 leading-relaxed">Além do cardápio em vídeo, o cliente faz o pedido direto pelo celular.</p>
+                            <ul class="space-y-4 mt-8 pt-8 border-white/10 border-t text-stone-400 text-sm">
+                                <li class="flex gap-x-4"><svg class="size-4 text-stone-600 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                                </svg>Tudo do plano Cardápio em vídeo</li>
+                                <li class="flex gap-x-4"><svg class="size-4 text-stone-600 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+                                </svg>Pedidos feitos pelo celular, direto da mesa</li>
+                            </ul>
+                            <div class="mt-auto pt-8">
+                                <button class="inline-flex justify-center items-center px-8 py-4 border border-white/10 rounded-full w-full font-medium text-stone-600 cursor-not-allowed" type="button" disabled>Em breve</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-8 text-stone-400 text-sm text-center" data-reveal>Valores por unidade. Plaquinhas NFC à parte, R$ 80 cada. Pagamento no cartão ou Pix, sem fidelidade.</p>
+                </div>
+            </section>
+
+            <!-- Dúvidas -->
+            <section class="relative pt-32 scroll-mt-16" id="duvidas">
+                <div class="gap-16 grid lg:grid-cols-5 mx-auto px-4 max-w-6xl">
+                    <div class="lg:top-32 lg:sticky lg:self-start lg:col-span-2">
+                        <p class="text-amber-200/70 text-sm tracking-[.25em]" data-reveal>DÚVIDAS FREQUENTES</p>
+                        <h2 class="mt-4 font-title text-5xl sm:text-6xl leading-[.95]" data-reveal style="--delay: 100ms">Antes de você <em class="text-gold">perguntar</em></h2>
+                    </div>
+                    <div class="lg:col-span-3 border-white/10 border-t" data-reveal style="--delay: 150ms">
+                        <div class="border-white/10 border-b" x-data="{ open: false }">
+                            <button class="flex justify-between items-center gap-x-4 py-8 w-full font-medium text-lg text-left cursor-pointer" @click="open = !open" :aria-expanded="open" type="button">
+                                Quanto custam as plaquinhas?
+                                <svg :class="open && 'rotate-45'" class="size-6 text-amber-200 duration-300 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <div class="grid transition-all duration-300 ease-out" :class="open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'">
+                                <div class="overflow-hidden">
+                                    <p class="pr-8 pb-8 text-stone-400 leading-relaxed">As plaquinhas NFC são cobradas à parte, por R$ 80 cada. Cada uma leva a identidade do seu restaurante e o número da mesa.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-white/10 border-b" x-data="{ open: false }">
+                            <button class="flex justify-between items-center gap-x-4 py-8 w-full font-medium text-lg text-left cursor-pointer" @click="open = !open" :aria-expanded="open" type="button">
+                                Tem fidelidade?
+                                <svg :class="open && 'rotate-45'" class="size-6 text-amber-200 duration-300 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <div class="grid transition-all duration-300 ease-out" :class="open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'">
+                                <div class="overflow-hidden">
+                                    <p class="pr-8 pb-8 text-stone-400 leading-relaxed">Não. Você paga a assinatura no cartão ou no Pix e pode cancelar quando quiser.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-white/10 border-b" x-data="{ open: false }">
+                            <button class="flex justify-between items-center gap-x-4 py-8 w-full font-medium text-lg text-left cursor-pointer" @click="open = !open" :aria-expanded="open" type="button">
+                                Em quanto tempo começo a usar?
+                                <svg :class="open && 'rotate-45'" class="size-6 text-amber-200 duration-300 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <div class="grid transition-all duration-300 ease-out" :class="open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'">
+                                <div class="overflow-hidden">
+                                    <p class="pr-8 pb-8 text-stone-400 leading-relaxed">O cardápio funciona assim que você cadastra os pratos, pelo link próprio que dá para divulgar no Instagram e no WhatsApp. As plaquinhas chegam em torno de 15 dias.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-white/10 border-b" x-data="{ open: false }">
+                            <button class="flex justify-between items-center gap-x-4 py-8 w-full font-medium text-lg text-left cursor-pointer" @click="open = !open" :aria-expanded="open" type="button">
+                                O cliente precisa baixar algum aplicativo?
+                                <svg :class="open && 'rotate-45'" class="size-6 text-amber-200 duration-300 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <div class="grid transition-all duration-300 ease-out" :class="open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'">
+                                <div class="overflow-hidden">
+                                    <p class="pr-8 pb-8 text-stone-400 leading-relaxed">Não. O cardápio abre direto no navegador do celular, sem cadastro e sem instalação.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-white/10 border-b" x-data="{ open: false }">
+                            <button class="flex justify-between items-center gap-x-4 py-8 w-full font-medium text-lg text-left cursor-pointer" @click="open = !open" :aria-expanded="open" type="button">
+                                Funciona em qualquer celular?
+                                <svg :class="open && 'rotate-45'" class="size-6 text-amber-200 duration-300 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <div class="grid transition-all duration-300 ease-out" :class="open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'">
+                                <div class="overflow-hidden">
+                                    <p class="pr-8 pb-8 text-stone-400 leading-relaxed">Hoje em dia praticamente todos os celulares têm NFC. E, para quem não tiver, a plaquinha também pode vir com um QR Code, assim ninguém fica sem ver os pratos.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-white/10 border-b" x-data="{ open: false }">
+                            <button class="flex justify-between items-center gap-x-4 py-8 w-full font-medium text-lg text-left cursor-pointer" @click="open = !open" :aria-expanded="open" type="button">
+                                Preciso contratar filmagem profissional?
+                                <svg :class="open && 'rotate-45'" class="size-6 text-amber-200 duration-300 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <div class="grid transition-all duration-300 ease-out" :class="open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'">
+                                <div class="overflow-hidden">
+                                    <p class="pr-8 pb-8 text-stone-400 leading-relaxed">Não. Um celular, boa luz e o prato saindo da cozinha já resolvem. Os vídeos têm até 15 segundos e podem ser enviados em MP4, MOV, M4V ou WebM.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-white/10 border-b" x-data="{ open: false }">
+                            <button class="flex justify-between items-center gap-x-4 py-8 w-full font-medium text-lg text-left cursor-pointer" @click="open = !open" :aria-expanded="open" type="button">
+                                Tenho mais de uma unidade. Como funciona?
+                                <svg :class="open && 'rotate-45'" class="size-6 text-amber-200 duration-300 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <div class="grid transition-all duration-300 ease-out" :class="open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'">
+                                <div class="overflow-hidden">
+                                    <p class="pr-8 pb-8 text-stone-400 leading-relaxed">A assinatura é por unidade. Cada unidade tem o seu cardápio e as suas mesas, e você gerencia tudo pela mesma conta.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-white/10 border-b" x-data="{ open: false }">
+                            <button class="flex justify-between items-center gap-x-4 py-8 w-full font-medium text-lg text-left cursor-pointer" @click="open = !open" :aria-expanded="open" type="button">
+                                Como sei se está dando resultado?
+                                <svg :class="open && 'rotate-45'" class="size-6 text-amber-200 duration-300 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <div class="grid transition-all duration-300 ease-out" :class="open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'">
+                                <div class="overflow-hidden">
+                                    <p class="pr-8 pb-8 text-stone-400 leading-relaxed">A plataforma registra quantas vezes cada prato foi visto e tocado. Assim você descobre o que desperta interesse e o que precisa de um vídeo melhor.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chamada final -->
+            <section class="relative px-4 py-32">
+                <div class="relative bg-stone-900 mx-auto px-8 py-16 sm:py-32 rounded-[2.5rem] ring-1 ring-white/10 max-w-6xl overflow-hidden text-center" data-reveal>
+                    <div class="top-1/2 left-1/2 absolute bg-radial from-amber-500/20 via-orange-700/5 to-70% to-transparent blur-2xl rounded-full w-[900px] h-[500px] -translate-x-1/2 -translate-y-1/2 breathe"></div>
+                    <div class="-bottom-1/2 left-1/2 absolute bg-radial from-orange-600/30 via-amber-700/10 to-70% to-transparent blur-2xl rounded-full w-[1100px] h-[500px] -translate-x-1/2"></div>
+                    <div class="absolute inset-0 opacity-[.06] grain"></div>
+                    <div class="relative">
+                        <h2 class="mx-auto max-w-3xl font-title text-5xl sm:text-7xl lg:text-8xl leading-[.92]">Faça seu cliente <em class="text-gold">pedir com os olhos</em></h2>
+                        <p class="mx-auto mt-8 max-w-xl text-stone-400 sm:text-lg leading-relaxed">Plaquinhas NFC personalizadas nas mesas e um cardápio em vídeo que trabalha por você em cada atendimento.</p>
+                        <div class="flex sm:flex-row flex-col justify-center items-center gap-4 mt-8">
+                            <a class="group inline-flex justify-center items-center gap-x-2 bg-linear-to-b from-amber-200 to-amber-400 shadow-[0_0_40px_-10px_rgba(245,158,11,.7)] hover:shadow-[0_0_50px_-8px_rgba(245,158,11,.85)] px-8 py-4 rounded-full w-full sm:w-auto font-medium text-stone-950 duration-300" href="">
+                                Quero no meu restaurante
+                                <svg class="size-4 group-hover:translate-x-1 duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path fill-rule="evenodd" d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z" clip-rule="evenodd"/>
+                                </svg>
+                            </a>
+                            <a class="inline-flex justify-center items-center hover:bg-white/5 px-8 py-4 border border-white/15 rounded-full w-full sm:w-auto font-medium duration-300" href="">Já sou cliente</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rodapé -->
+            <footer class="border-white/10 border-t">
+                <div class="mx-auto px-4 max-w-6xl">
+                    <div class="gap-16 grid lg:grid-cols-12 pt-16">
+                        <div class="lg:col-span-5">
+                            <a class="inline-flex items-center gap-x-2 font-title text-4xl italic leading-none" href="#">
+                                <img class="size-9" src="colada-sem-fundo-192x192.png" loading="lazy">
+                                <span class="mt-0.5">Salivei</span>
+                            </a>
+                            <p class="mt-4 max-w-sm text-stone-400 leading-relaxed">Cardápio em vídeo e plaquinhas NFC para restaurantes que querem vender pelo olhar.</p>
+                            <div class="flex gap-x-2 mt-8">
+                                <a class="flex justify-center items-center hover:bg-white/5 border border-white/10 rounded-full size-12 text-stone-400 hover:text-stone-100 duration-300" href="https://instagram.com/SEU_USUARIO" target="_blank" rel="noopener" aria-label="Instagram">
+                                    <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4Z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 7.5v.01"/>
+                                    </svg>
+                                </a>
+                                <a class="flex justify-center items-center hover:bg-white/5 border border-white/10 rounded-full size-12 text-stone-400 hover:text-stone-100 duration-300" href="https://wa.me/55SEUNUMERO" target="_blank" rel="noopener" aria-label="WhatsApp">
+                                    <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m3 21 1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/>
+                                    </svg>
+                                </a>
+                                <a class="flex justify-center items-center hover:bg-white/5 border border-white/10 rounded-full size-12 text-stone-400 hover:text-stone-100 duration-300" href="mailto:SEU_EMAIL" aria-label="E-mail">
+                                    <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="gap-8 grid grid-cols-2 sm:grid-cols-3 lg:col-span-7 text-sm">
+                            <div>
+                                <p class="text-stone-400 text-xs tracking-[.25em]">PRODUTO</p>
+                                <ul class="space-y-4 mt-4 text-stone-400">
+                                    <li><a class="hover:text-stone-100 duration-300" href="#como-funciona">Como funciona</a></li>
+                                    <li><a class="hover:text-stone-100 duration-300" href="#vantagens">Vantagens</a></li>
+                                    <li><a class="hover:text-stone-100 duration-300" href="#nfc">Plaquinha NFC</a></li>
+                                    <li><a class="hover:text-stone-100 duration-300" href="#precos">Preços</a></li>
+                                    <li><a class="hover:text-stone-100 duration-300" href="#duvidas">Dúvidas</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="text-stone-400 text-xs tracking-[.25em]">CONTA</p>
+                                <ul class="space-y-4 mt-4 text-stone-400">
+                                    <li><a class="hover:text-stone-100 duration-300" href="">Criar conta</a></li>
+                                    <li><a class="hover:text-stone-100 duration-300" href="">Entrar</a></li>
+                                    <li><a class="hover:text-stone-100 duration-300" href="">Recuperar senha</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="text-stone-400 text-xs tracking-[.25em]">LEGAL</p>
+                                <ul class="space-y-4 mt-4 text-stone-400">
+                                    <li><a class="hover:text-stone-100 duration-300" href="">Termos de uso</a></li>
+                                    <li><a class="hover:text-stone-100 duration-300" href="">Política de privacidade</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-16 py-8 border-white/10 border-t text-stone-400 text-sm text-center">
+                        <p>© 2026 Salivei · Cardápios digitais em vídeo</p>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <script>
+            document.addEventListener("alpine:init", () => {
+                Alpine.data("alpine", () => ({
+
+                    dishes: [
+                        { name: "Burger Artesanal", price: "R$ 46,00", emoji: "🍔", hot: true },
+                        { name: "Soda da Casa", price: "R$ 18,00", emoji: "🍹", hot: false },
+                        { name: "Massa Aurora", price: "R$ 62,00", emoji: "🍝", hot: true },
+                        { name: "Pizza da Casa", price: "R$ 74,00", emoji: "🍕", hot: true },
+                        { name: "Cacau & Caramelo", price: "R$ 29,00", emoji: "🍰", hot: false },
+                        { name: "Café Cremoso", price: "R$ 12,00", emoji: "☕", hot: true },
+                    ],
+                    screen: "lock",
+                    sheet: false,
+                    island: false,
+                    stage: 0,
+                    stageScale: 1,
+                    reduceMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+
+                    // Linha do tempo da demonstração (em segundos)
+                    steps: [[0, 3.5], [3.5, 4.3], [4.3, 7.55], [7.55, 10.5]],
+                    staticFrames: [2.9, 4.1, 6.6, 8.8],
+                    phoneKeys: [
+                        { t: 0, x: 68, y: -20, z: 60, rx: 4, ry: -22, rz: 6 },
+                        { t: 0.9, x: 68, y: -24, z: 60, rx: 4, ry: -22, rz: 6 },
+                        { t: 2.2, x: 30, y: 140, z: 40, rx: 0, ry: 14, rz: -12, arc: 40 },
+                        { t: 3.4, x: 30, y: 140, z: 40, rx: 0, ry: 14, rz: -12 },
+                        { t: 4.5, x: 0, y: -8, z: 150, rx: 0, ry: 0, rz: 0 },
+                        { t: 10.3, x: 0, y: -8, z: 150, rx: 0, ry: 0, rz: 0 },
+                        { t: 11.6, x: 68, y: -20, z: 60, rx: 4, ry: -22, rz: 6, arc: 30 },
+                    ],
+                    clock: 0,
+                    last: null,
+                    frame: null,
+                    running: false,
+
+                    get loop() {
+                        return this.phoneKeys[this.phoneKeys.length - 1].t
+                    },
+
+                    init() {
+                        // Revelação e spotlight não usam $refs, então não precisam esperar o $nextTick
+                        this.observeReveal()
+                        this.setupSpotlight()
+                        this.$nextTick(() => this.setupDemo())
+                    },
+
+                    observeReveal() {
+                        const observer = new IntersectionObserver(entries => {
+                            entries.forEach(entry => {
+                                // data-reveal="load" revela no primeiro disparo do observer, mesmo fora da tela
+                                if (!entry.isIntersecting && entry.target.dataset.reveal !== "load") return
+                                entry.target.classList.add("is-visible")
+                                observer.unobserve(entry.target)
+                            })
+                        }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" })
+                        document.querySelectorAll("[data-reveal]").forEach(element => observer.observe(element))
+                    },
+
+                    setupSpotlight() {
+                        document.addEventListener("pointermove", event => {
+                            const card = event.target.closest("[data-spotlight]")
+                            if (!card) return
+                            const rect = card.getBoundingClientRect()
+                            card.style.setProperty("--mx", `${event.clientX - rect.left}px`)
+                            card.style.setProperty("--my", `${event.clientY - rect.top}px`)
+                        })
+                    },
+
+                    setupDemo() {
+                        new ResizeObserver(([entry]) => {
+                            this.stageScale = Math.min(entry.contentRect.width / 360, 1.28)
+                        }).observe(this.$refs.stageWrap)
+
+                        if (this.reduceMotion) {
+                            this.render(this.staticFrames[2])
+                            return
+                        }
+
+                        this.render(0)
+                        new IntersectionObserver(([entry]) => {
+                            entry.isIntersecting ? this.play() : this.pause()
+                        }, { threshold: 0.2 }).observe(this.$refs.stageWrap)
+                    },
+
+                    play() {
+                        if (this.running) return
+                        this.running = true
+                        this.last = null
+                        this.frame = requestAnimationFrame(now => this.tick(now))
+                    },
+
+                    pause() {
+                        this.running = false
+                        cancelAnimationFrame(this.frame)
+                    },
+
+                    tick(now) {
+                        if (!this.running) return
+                        const delta = this.last === null ? 0 : Math.min((now - this.last) / 1000, 0.05)
+                        this.last = now
+                        this.render((this.clock + delta) % this.loop)
+                        this.frame = requestAnimationFrame(next => this.tick(next))
+                    },
+
+                    goTo(index) {
+                        this.render(this.reduceMotion ? this.staticFrames[index] : this.steps[index][0])
+                    },
+
+                    clamp(value) {
+                        return Math.min(Math.max(value, 0), 1)
+                    },
+
+                    ease(p) {
+                        return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2
+                    },
+
+                    between(t, start, end) {
+                        return this.clamp((t - start) / (end - start))
+                    },
+
+                    samplePhone(t) {
+                        const keys = this.phoneKeys
+                        const index = keys.findIndex(key => key.t > t)
+                        if (index <= 0) return { ...keys[keys.length - 1] }
+                        const from = keys[index - 1]
+                        const to = keys[index]
+                        const p = this.ease((t - from.t) / (to.t - from.t))
+                        const pose = {}
+                        for (const prop of ["x", "y", "z", "rx", "ry", "rz"]) pose[prop] = from[prop] + (to[prop] - from[prop]) * p
+                        if (to.arc) pose.y -= Math.sin(Math.PI * p) * to.arc
+                        return pose
+                    },
+
+                    render(t) {
+                        this.clock = t
+                        const refs = this.$refs
+
+                        // Celular: trajetória, flutuação e vibração no contato
+                        const pose = this.samplePhone(t)
+                        const still = this.between(t, 1.8, 2.2) - this.between(t, 3.4, 3.8)
+                        pose.y += Math.sin(t * 1.7) * 4 * (1 - still)
+                        if (t > 2.3 && t < 2.8) pose.x += Math.sin(t * 95) * 1.6 * (1 - this.between(t, 2.3, 2.8))
+                        refs.phone.style.transform = `translate3d(${pose.x}px, ${pose.y}px, ${pose.z}px) rotateX(${pose.rx}deg) rotateY(${pose.ry}deg) rotateZ(${pose.rz}deg)`
+                        refs.phoneShadow.style.transform = `translate(${450 + pose.x}px, ${350 + pose.z}px)`
+                        refs.phoneShadow.style.opacity = 0.5 - pose.z / 600
+
+                        // Ondas NFC e brilho na plaquinha
+                        Array.from(refs.rings.children).forEach((ring, index) => {
+                            const p = (t - 2.2 - index * 0.3) / 1.2
+                            const active = p >= 0 && p <= 1
+                            ring.style.opacity = active ? (1 - p) * 0.9 : 0
+                            ring.style.transform = `scale(${0.4 + (active ? p : 0) * 2.8})`
+                        })
+                        refs.plateGlow.style.opacity = this.between(t, 2.1, 2.5) - this.between(t, 3.3, 3.9)
+
+                        // Foco no celular
+                        refs.dim.style.opacity = (this.between(t, 3.6, 4.5) - this.between(t, 10.3, 11.1)) * 0.6
+
+                        // Rolagem do cardápio e toque no prato
+                        refs.feed.style.transform = `translateY(${-64 * this.ease(this.between(t, 5.2, 6.5))}px)`
+                        const tap = this.between(t, 6.95, 7.6)
+                        refs.tap.style.opacity = Math.sin(Math.PI * tap)
+                        refs.tap.style.transform = `scale(${1.5 - tap * 0.7})`
+
+                        // Estados das telas
+                        const screen = t >= 3.5 && t < 4.3 ? "splash" : t >= 4.3 && t < 10.5 ? "menu" : "lock"
+                        if (this.screen !== screen) this.screen = screen
+                        const sheet = t >= 7.55 && t < 9.9
+                        if (this.sheet !== sheet) this.sheet = sheet
+                        const island = t >= 2.45 && t < 4.1
+                        if (this.island !== island) this.island = island
+
+                        // Etapas ao lado
+                        const stage = Math.max(this.steps.findIndex(([start, end]) => t >= start && t < end), 0)
+                        if (this.stage !== stage) this.stage = stage
+                        this.steps.forEach(([start, end], index) => {
+                            const p = index === stage && t < end ? this.between(t, start, end) : 0
+                            refs[`stepBar${index}`].style.transform = `scaleX(${p})`
+                        })
+                    },
+
+                }))
+            })
+            </script>
+    </body>
+</html>
